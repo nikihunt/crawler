@@ -1,2 +1,4 @@
+.gitignore
 *.conf
 *.pyc
+*.log
