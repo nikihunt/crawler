@@ -12,6 +12,8 @@ class Log(object):
         self.slogger = ''
         self.flogger = ''
         self.defaultlog = 'this is default log info'
+        self.terminal = True
+        self.file = False
 
     # 获取当前时间
     def getCurrentTime(self, TimeFormat="%Y-%m-%d-%X"):
@@ -39,41 +41,50 @@ class Log(object):
         formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
         logHandler.setFormatter(formatter)
         self.slogger.setLevel(LogLevel)
-        self.slogger
 
-    def fdebug(self, message=None):
+    def setSLoggerLevel(self, LogLevel=logging.NOTSET):
+        self.slogger.setLevel(LogLevel)
+
+    def setFLoggerLevel(self, LogLevel=logging.NOTSET):
+        self.flogger.setLevel(LogLevel)
+
+    def setReciver(self, terminal, fileR):
+        self.terminal = terminal
+        self.file = fileR
+
+    def debug(self, message=None):
         if self.flogger == '':
             self.setFLogger()
         if message == None:
             message = self.defaultlog
         self.flogger.debug(message)
 
-    def finfo(self, message=None):
+    def info(self, message=None):
         if self.flogger == '':
             self.setFLogger()
         if message == None:
             message = self.defaultlog
         self.flogger.info(message)
 
-    def sdebug(self, message=None):
-        if self.slogger == '':
-            self.setSLogger()
+    def waring(self, message=None):
+        if self.flogger == '':
+            self.setFLogger()
         if message == None:
             message = self.defaultlog
-        self.slogger.debug(message)
+        self.flogger.warning(message)
 
-    def sinfo(self, message=None):
-        if self.slogger == '':
-            self.setSLogger()
+    def error(self, message=None):
+        if self.flogger == '':
+            self.setFLogger()
         if message == None:
             message = self.defaultlog
-        self.slogger.info(message)
+        self.flogger.warning(message)
 
     def test(self):
-        self.sdebug("this is slogger debug")
-        self.sinfo("this is slogger info")
         self.fdebug("this is flogger debug")
         self.finfo("this is flogger info")
+        self.fwaring("this is flogger warning")
+        self.ferror("this is flogger error")
 
 if __name__ == '__main__':
     Log().test()

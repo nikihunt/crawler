@@ -10,12 +10,18 @@ def getConfig(section, key, filename='info.conf'):
     path = os.path.split(os.path.realpath(__file__))[0] + os.sep + filename
     config.read(path)
     try:
-    	return config.get(section, key)
+        result = config.get(section, key)
+        if result.lower() == str(True).lower():
+            result = True
+        elif result.lower() == str(False).lower():
+            result = False
+        return result
     except Exception, e:
-    	log.Log().sdebug(e)
-    finally:
-    	return None
+        log.Log().sdebug(e)
+        return None
 
 
 if __name__ == '__main__':
-    print getConfig(None,None)
+    result = getConfig('global', 'FILERECIVER')
+    print type(result)
+    print type(True)
